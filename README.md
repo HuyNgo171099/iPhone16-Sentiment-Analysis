@@ -35,7 +35,7 @@ This project aims to build an ETL pipeline that extracts YouTube comments and Re
 
    ```sh
    git clone https://github.com/HuyNgo171099/iPhone16-Sentiment-Analysis-Pipeline
-   cd Travel-Agency-Pipeline 
+   cd iPhone16-Sentiment-Analysis-Pipeline
 
 2. **Docker Setup for MongoDB and Airflow**
 
@@ -130,13 +130,17 @@ This query calculates sentiment proportions for each topic in both YouTube comme
 
 3. **Insights**
 
-![Figure 6: Reddit Pie Chart](output/reddit_sentiment_pie_chart.png)
+<!-- Row 1: Figure 6 and Figure 7 -->
+<p align="center">
+  <img src="output/reddit_sentiment_pie_chart.png" alt="Figure 6: Reddit Pie Chart" width="45%">
+  <img src="output/reddit_sentiment_by_topic_heatmap.png" alt="Figure 7: Reddit Heatmap" width="45%">
+</p>
 
-![Figure 7: Reddit Heatmap](output/reddit_sentiment_by_topic_heatmap.png)
-
-![Figure 8: YouTube Pie Chart](output/youtube_sentiment_pie_chart.png)
-
-![Figure 9: YouTube Heatmap](output/youtube_sentiment_by_topic_heatmap.png)
+<!-- Row 2: Figure 8 and Figure 9 -->
+<p align="center">
+  <img src="output/youtube_sentiment_pie_chart.png" alt="Figure 8: YouTube Pie Chart" width="45%">
+  <img src="output/youtube_sentiment_by_topic_heatmap.png" alt="Figure 9: YouTube Heatmap" width="45%">
+</p>
 
 - On Reddit, 65.8% of users expressed neutral sentiments towards the iPhone 16, with the most-discussed topics being "camera," "screen size," "battery," and "OS."
 - On YouTube, 75.6% of users remained neutral, while the "camera" (573 mentions) and "performance" (179 mentions) were top discussion topics.
