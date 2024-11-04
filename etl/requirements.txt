@@ -1,0 +1,24 @@
+apache-airflow==2.5.1
+
+# Database and API clients
+pymongo==4.5.0
+google-api-python-client==1.12.11
+praw==7.5.0
+sqlalchemy<2.0.0
+
+# NLP libraries and models
+nltk==3.7
+spacy==3.3.0
+emoji==1.6.3
+isodate==0.6.1
+
+# Data processing
+pandas==1.5.3
+numpy==1.23.5  
+cython==0.29.36
+
+# Utility libraries
+flask-session==0.4.0
+PyYAML==6.0
+connexion==2.14.1
+

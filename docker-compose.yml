@@ -1,0 +1,74 @@
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${ROOT_PASSWORD}
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    command: --bind_ip 0.0.0.0
+    healthcheck: 
+      test: ["CMD", "mongosh", "--host", "mongodb", "--eval", "db.runCommand({ ping: 1 }).ok"]
+      interval: 5s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+    networks:
+      - app_network
+  
+  etl:
+    build:
+      context: ./etl
+    container_name: etl_pipeline
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    environment:
+      PYTHONDONTWRITEBYTECODE: 1
+      SQLALCHEMY_WARN_20: 1
+      AIRFLOW__CORE__DAGS_FOLDER: /usr/local/airflow/dags
+      AIRFLOW__CORE__DAGBAG_IMPORT_TIMEOUT: 60
+      AIRFLOW__CORE_EXECUTOR: LocalExecutor
+      AIRFLOW__CORE__LOAD_EXAMPLES: False
+      AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: False
+      ROOT_USERNAME: ${ROOT_USERNAME}
+      ROOT_PASSWORD: ${ROOT_PASSWORD}
+      REDDIT_CLIENT_ID: ${REDDIT_CLIENT_ID}
+      REDDIT_CLIENT_SECRET: ${REDDIT_CLIENT_SECRET}
+      YOUTUBE_API_KEY: ${YOUTUBE_API_KEY}
+      _AIRFLOW_WWW_USER_CREATE: 'true'
+      _AIRFLOW_WWW_USER_USERNAME: 'admin'
+      _AIRFLOW_WWW_USER_PASSWORD: 'admin'
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./etl:/usr/local/airflow/dags
+      - ./output:/usr/local/airflow/files
+    networks:
+      - app_network
+  
+  query:
+    build:
+      context: ./query
+    container_name: query
+    environment:
+      ROOT_USERNAME: ${ROOT_USERNAME}
+      ROOT_PASSWORD: ${ROOT_PASSWORD}
+    volumes:
+      - ./output:/app/output
+    networks:
+      - app_network
+    command: ["./wait-for-it.sh", "mongodb:27017", "--timeout=60", "--", "python", "query.py"]
+    restart: "no"
+
+volumes:
+  mongo_data:
+
+networks:
+  app_network:
+    driver: bridge
+
+
