@@ -35,21 +35,25 @@ This project aims to build an ETL pipeline that extracts YouTube comments and Re
 
    ```sh
    git clone https://github.com/HuyNgo171099/iPhone16-Sentiment-Analysis-Pipeline
+
+2. **Navigate to the Project Directory**
+
+   ```sh
    cd iPhone16-Sentiment-Analysis-Pipeline
 
-2. **Docker Setup for MongoDB and Airflow**
+3. **Start MongoDB and Airflow Services**
 
    ```sh
-   docker-compose up --build mongodb etl
+   docker-compose up --build -d mongodb etl
 
-3. **Airflow Webserver GUI (localhost:8080)**
+4. **Access Airflow GUI**: Navigate to `localhost:8080` in your browser and run the DAG.
 
-4. **Docker Setup for Query**
+5. **Start Query Service**
 
    ```sh
-   docker-compose up --build query
+   docker-compose up --build -d query
 
-4. **MongoDB Compass Connection (Optional)**
+6. **Start MongoDB Compass**
 
 ## ETL Pipeline
 
